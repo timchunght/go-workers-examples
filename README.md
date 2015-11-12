@@ -1,5 +1,16 @@
 # Async jobs between Go and Ruby
 
+Go Client plus Go Worker
+
+	go run worker.go & go run client.go
+
+You should see "Alice" being printed out.
+
+In ``client.go``, we have a struct called Message and we passed that into the worker queue.
+
+In ``worker.go``, the worker picks up the job from the redis queue and unmarshal the ``args`` into struct. Of course, the Message struct needs to be present for proper conversion. For demonstrative purposes, the code is not too DRY.
+
+
 ## Execution
 
 ```
