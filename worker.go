@@ -1,9 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/Scalingo/go-workers"
-	"encoding/json"
 	// "reflect"
 	// "github.com/bitly/go-simplejson"
 )
@@ -17,21 +17,21 @@ func main() {
 	workers.Process("myqueue", MyGoWorker, 10)
 	workers.Run()
 }
-	
+
 type Message struct {
-    Name string
-    Body string
-    Time int64
+	Name string
+	Body string
+	Time int64
 }
 
 func MyGoWorker(msg *workers.Msg) {
-	args := msg.Args().ToJson()	
+	args := msg.Args().ToJson()
 
 	var m Message
 	err := json.Unmarshal([]byte(args), &m)
-	if(err != nil) {
+	if err != nil {
 		fmt.Println("unmarshal error")
 	}
 	fmt.Println(m.Name)
-	
+
 }
